@@ -1,0 +1,800 @@
+/* Form Elements */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+    width: 50%; /* Nur 50% der Breite nutzen */
+}
+
+.form-grid-upper {
+    margin-top: 20px; /* Abstand zur Überschrift */
+}
+
+.form-grid-lower {
+    margin-bottom: 10px; /* Reduzierter Abstand zu Wunden */
+}/* General Styles */
+* {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1000px; /* Breiter statt 800px */
+    margin: 0 auto;
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+/* Für das Image-Upload-Feld */
+.image-container {
+    width: 22%;
+    position: absolute;
+    right: 25%;
+    top: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    min-height: 200px; 
+}
+
+.character-image {
+    max-width: 100%;
+    max-height: 150px; /* Reduziert von 200px */
+    margin-bottom: 10px;
+    display: none; /* Wird beim Upload eingeblendet */
+    border-radius: 4px;
+}
+
+.upload-label {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.upload-label:hover {
+    background-color: #45a049;
+}
+
+.image-instructions {
+    font-size: 12px;
+    color: #666;
+    text-align: center;
+    margin-top: 8px;
+}
+
+.remove-image {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    margin-top: 10px;
+    display: none; /* Wird eingeblendet, wenn ein Bild vorhanden ist */
+}
+
+.remove-image:hover {
+    background-color: #d32f2f;
+}
+
+.form-row {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+select {
+    cursor: pointer;
+    width: 100%;
+}
+
+/* Combat Stats Styles */
+.combat-stats {
+    background-color: #f9f9f9;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.combat-stats h2 {
+    color: #444;
+    font-size: 18px;
+    margin: 0;
+    flex: 1;
+    text-align: center;
+}
+
+.combat-stats-left, 
+.combat-stats-right {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.combat-stat {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.combat-stat label {
+    font-size: 12px;
+    font-weight: bold;
+    margin: 0;
+    white-space: nowrap;
+}
+
+.combat-stat input {
+    width: 40px;
+    text-align: center;
+    background-color: #f0f0f0;
+    cursor: not-allowed;
+    font-size: 14px;
+    padding: 3px;
+    margin: 0;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
+
+.combat-stat.kp input {
+    width: 60px;
+}
+
+/* Custom Select Styles */
+.custom-select-container {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.custom-select-button {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    cursor: pointer;
+    position: relative;
+}
+
+.custom-select-button:after {
+    content: '';
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #777;
+}
+
+.custom-select-dropdown {
+    position: absolute;
+    width: 100%;
+    max-height: 250px;
+    overflow-y: auto;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    z-index: 10;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.custom-select-option {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.custom-select-option:hover {
+    background-color: #f8f8f8;
+}
+
+/* Tooltip Styles */
+.tooltip-text {
+    position: fixed;
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    border-radius: 4px;
+    z-index: 1000;
+    max-width: 300px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Wounds Tracker Styles */
+.wounds-container {
+    margin: 25px auto;
+    width: 100%;
+    text-align: center;
+}
+
+.wounds-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #8B0000;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    margin-bottom: 15px;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 2px;
+}
+
+.wounds-tracker {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    width: 80%;
+    margin: 0 auto;
+    padding: 10px 5px;
+    background-color: #f5f5f5;
+    border-radius: 15px;
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.1);
+}
+
+.wound-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+}
+
+.wound-circle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 8px rgba(139,0,0,0.6);
+}
+
+.wound-number {
+    color: white;
+    font-size: 14px;
+    user-select: none;
+}
+
+/* Wound circle colors */
+#wound-1 { background-color: #000000; }
+#wound-2 { background-color: #1A0000; }
+#wound-3 { background-color: #330000; }
+#wound-4 { background-color: #4D0000; }
+#wound-5 { background-color: #660000; }
+#wound-6 { background-color: #800000; }
+#wound-7 { background-color: #990000; }
+#wound-8 { background-color: #B30000; }
+#wound-9 { background-color: #8B0000; }
+
+.wound-skull {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: #8B0000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+}
+
+.wound-skull:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(139,0,0,0.8);
+}
+
+.wound-skull-icon {
+    color: white;
+    font-size: 24px;
+    user-select: none;
+}
+
+/* Attributes Section Styles */
+.attributes-section {
+    margin-top: 30px;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+.attributes-section h2 {
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+#available-points, #available-skill-points {
+    font-size: 16px;
+    background-color: #f0f0f0;
+    padding: 4px 10px;
+    border-radius: 15px;
+    color: #444;
+    border: 1px solid #ddd;
+    font-weight: normal;
+}
+
+/* ÜBERARBEITETER BEREICH: Attributspalten mittig ausrichten */
+.attributes-grid {
+    display: flex;
+    flex-wrap: nowrap; /* Verhindert das Umbrechen der Spalten */
+    justify-content: center;
+    gap: 10px; /* Kleinerer Abstand zwischen den Spalten */
+    width: 100%;
+    margin: 0 auto;
+}
+
+.attribute-column {
+    flex: 0 0 23%; /* Prozentuale Breite für alle Spalten, damit alle vier nebeneinander passen */
+    min-width: 200px; /* Größere Mindestbreite (war 150px) */
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    margin-bottom: 15px;
+}
+
+.attribute-column h3 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #ddd;
+    color: #444;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.attribute-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.attribute-item {
+    padding: 8px 10px;
+    background-color: white;
+    border-radius: 4px;
+    border: 1px solid #eee;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 36px;
+}
+
+/* Die Texte der Attribute sollen nicht umbrechen und ellipsis anzeigen bei Überlauf */
+.attribute-item {
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.attribute-value-container {
+    display: flex;
+    align-items: center;
+    min-width: 70px; /* Mindestbreite für den Zahlenblock */
+    justify-content: flex-end;
+    flex-shrink: 0; /* Verhindert, dass der Zahlenblock schrumpft */
+}
+
+.attribute-value {
+    width: 40px;
+    text-align: center;
+    padding: 3px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 14px;
+    flex-shrink: 0; /* Verhindert, dass das Eingabefeld schrumpft */
+}
+
+.attribute-sum {
+    margin-left: 5px;
+    color: #888;
+    font-size: 14px;
+}
+
+.reset-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background-color 0.3s;
+}
+
+.reset-button:hover {
+    background-color: #d32f2f;
+}
+
+.main-attribute-value {
+    width: 40px;
+    text-align: center;
+    padding: 4px;
+    border: 1px solid #999;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #f0f0f0;
+}
+
+.footer {
+    margin-top: 30px;
+    text-align: center;
+    color: #777;
+    font-size: 14px;
+}
+
+/* Download Button Style */
+.download-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 12px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.download-btn:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.download-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 3px rgba(0,0,0,0.2);
+}
+
+/* Active Wound Styling */
+.wound-circle.active {
+    box-shadow: 0 0 10px rgba(139,0,0,0.7);
+    border: 2px solid #ffcccc;
+}
+
+/* Für den PDF-Export - wird beim Drucken/PDF-Export ausgeblendet */
+@media print {
+    .download-btn, .footer, h1 {
+        display: none !important;
+    }
+    
+    .container {
+        padding: 5px !important;
+    }
+    
+    /* Kompaktere Ansicht für den Druck */
+    .attributes-grid {
+        gap: 5px !important;
+    }
+    
+    .attribute-column {
+        padding: 8px !important;
+    }
+}
+
+/* Stil für das Kontext-Menü */
+.image-context-menu {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    z-index: 1000;
+    min-width: 150px;
+    overflow: hidden;
+}
+
+.context-menu-item {
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-size: 14px;
+}
+
+.context-menu-item:hover {
+    background-color: #f0f0f0;
+}
+
+#change-image {
+    border-bottom: 1px solid #eee;
+}
+
+#remove-image-ctx {
+    color: #f44336;
+}
+
+#remove-image-ctx:hover {
+    background-color: #ffebee;
+}
+
+/* Für das Image-Upload-Feld */
+.image-container {
+    width: 22%;
+    position: absolute;
+    right: 25%;
+    top: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    min-height: 200px;
+    transition: all 0.3s ease;
+}
+
+/* Modus, wenn nur das Bild angezeigt werden soll */
+.image-container.image-only-mode {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    width: 22%;
+    right: 25%;
+    top: 150px;
+    min-height: 200px;
+}
+
+.character-image {
+    max-width: 100%;
+    max-height: 150px;
+    margin-bottom: 10px;
+    display: none; /* Wird beim Upload eingeblendet */
+    border-radius: 4px;
+    cursor: pointer; /* Zeigt an, dass das Bild interaktiv ist */
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* Stil für das Bild im nur-Bild-Modus */
+.image-only-mode .character-image {
+    margin-bottom: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    border: 2px solid #fff;
+}
+
+/* Hover-Effekt für das Bild */
+.image-only-mode .character-image:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+/* Fokus-Stil für Zugänglichkeit und Anzeige der Entfernen-Funktion */
+.image-only-mode .character-image:focus {
+    outline: 3px solid #4CAF50;
+    box-shadow: 0 0 0 5px rgba(76, 175, 80, 0.3);
+}
+
+.image-only-mode .character-image:focus:after {
+    content: "Entf drücken zum Löschen";
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0,0,0,0.7);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.upload-label {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.upload-label:hover {
+    background-color: #45a049;
+}
+
+.image-instructions {
+    font-size: 12px;
+    color: #666;
+    text-align: center;
+    margin-top: 8px;
+}
+
+.remove-image {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    margin-top: 10px;
+    display: none; /* Wird eingeblendet, wenn ein Bild vorhanden ist */
+}
+
+.remove-image:hover {
+    background-color: #d32f2f;
+}
+
+.upload-label:hover {
+    background-color: #45a049;
+}
+
+/* Inventar-Styles */
+.inventory-section {
+    margin-top: 30px;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+    position: relative;
+    width: 100%;
+}
+
+.inventory-section h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+#inventory-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.item-slot {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    gap: 10px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    border: 1px solid #eee;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    align-items: center;
+}
+
+.item-description-container,
+.item-amount-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.item-description {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: none;
+    background-color: #f0f0f0;
+    font-size: 14px;
+}
+
+.item-amount {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* Stile für klassenspezifische Elemente */
+
+/* Spezial-Item-Slot */
+.special-item-slot {
+    background-color: #f0f8ff !important;
+    border: 2px dashed #4CAF50 !important;
+    transition: all 0.3s ease;
+}
+
+.special-item-slot:hover {
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
+}
+
+.item-name-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+/* Attacken-Sektion */
+.attacken-section {
+    margin-top: 30px;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+    position: relative;
+    width: 100%;
+}
+
+.attacken-section h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 1px;
+}
+
+.attacken-text {
+    width: 100%;
+    min-height: 150px;
+    padding: 15px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+    background-color: #fcfcfc;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+    line-height: 1.5;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Animation für neue Elemente */
+@keyframes highlight {
+    0% { background-color: #e8f5e9; }
+    100% { background-color: inherit; }
+}
+
+.special-item-slot, .attacken-section {
+    animation: highlight 2s ease-out;
+}

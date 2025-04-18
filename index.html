@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon Triaden-Charakterbauer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Pokemon Triaden-Charakter</h1>
+
+        <!-- Neue Struktur: Die oberen Eingabefelder links -->
+        <!-- 3-Spalten-Layout für die oberen Eingabefelder -->
+        <div class="form-grid form-grid-upper">
+            <div>
+                <label for="name">Name:</label>
+                <input type="text" id="name" placeholder="">
+            </div>
+            
+            <div>
+                <label for="player">Spieler:</label>
+                <input type="text" id="player" placeholder="">
+            </div>
+            
+            <div>
+                <label for="age">Alter:</label>
+                <input type="number" id="age" placeholder="" min="1">
+            </div>
+        </div>
+
+        <!-- Bild-Upload-Bereich im rechten Bereich -->
+        <div class="image-container">
+            <img id="character-image" class="character-image" src="" alt="Charakterbild" title="Doppelklick zum Ändern, Entf-Taste zum Löschen">
+            <label for="image-upload" class="upload-label">Charakterbild auswählen</label>
+            <input type="file" id="image-upload" accept="image/*" style="display: none;">
+            <p class="image-instructions">Wähle ein Bild für deinen Charakter<br>(max. 5 MB, empfohlenes Format 4:3)</p>
+            <button id="remove-image" class="remove-image">Bild entfernen</button>
+        </div>
+
+        <!-- 3-Spalten-Layout für Klasse, Vorteil, Nachteil (jetzt oberhalb der Wunden) -->
+        <div class="form-grid form-grid-lower">
+            <div>
+                <label for="class">Klasse:</label>
+                <select id="class">
+                    <option value="">-- Klasse auswählen --</option>
+                    <!-- Optionen werden durch JavaScript eingefügt -->
+                </select>
+            </div>
+            
+            <div>
+                <label for="advantage">Vorteil:</label>
+                <select id="advantage">
+                    <option value="">-- Vorteil auswählen --</option>
+                    <!-- Optionen werden durch JavaScript eingefügt -->
+                </select>
+            </div>
+            
+            <div>
+                <label for="disadvantage">Nachteil:</label>
+                <select id="disadvantage">
+                    <option value="">-- Nachteil auswählen --</option>
+                    <!-- Optionen werden durch JavaScript eingefügt -->
+                </select>
+            </div>
+        </div>
+
+        <!-- Wunden-Anzeige -->
+        <div class="wounds-container">
+        <div class="wounds-container">
+            <h2 class="wounds-title">Wunden</h2>
+            <div class="wounds-tracker">
+                <div class="wound-circle" id="wound-1">
+                    <span class="wound-number">1</span>
+                </div>
+                <div class="wound-circle" id="wound-2">
+                    <span class="wound-number">2</span>
+                </div>
+                <div class="wound-circle" id="wound-3">
+                    <span class="wound-number">3</span>
+                </div>
+                <div class="wound-circle" id="wound-4">
+                    <span class="wound-number">4</span>
+                </div>
+                <div class="wound-circle" id="wound-5">
+                    <span class="wound-number">5</span>
+                </div>
+                <div class="wound-circle" id="wound-6">
+                    <span class="wound-number">6</span>
+                </div>
+                <div class="wound-circle" id="wound-7">
+                    <span class="wound-number">7</span>
+                </div>
+                <div class="wound-circle" id="wound-8">
+                    <span class="wound-number">8</span>
+                </div>
+                <div class="wound-circle" id="wound-9">
+                    <span class="wound-number">9</span>
+                </div>
+                <div class="wound-skull" id="wound-10">
+                    <span class="wound-skull-icon">☠</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bereich für Kampfwerte in einer Zeile -->
+        <div class="combat-stats">
+            <div class="combat-stats-left">
+                <div class="combat-stat">
+                    <label for="gena">GENA</label>
+                    <input type="text" id="gena" value="1" readonly>
+                </div>
+                <div class="combat-stat">
+                    <label for="pa">PA</label>
+                    <input type="text" id="pa" value="1" readonly>
+                </div>
+                <div class="combat-stat kp">
+                    <label for="kp">KP</label>
+                    <input type="text" id="kp" value="1/1" readonly>
+                </div>
+            </div>
+            
+            <h2>Kampfwerte</h2>
+            
+            <div class="combat-stats-right">
+                <div class="combat-stat">
+                    <label for="init">INIT</label>
+                    <input type="text" id="init" value="1" readonly>
+                </div>
+                <div class="combat-stat">
+                    <label for="bw">BW</label>
+                    <input type="text" id="bw" value="1" readonly>
+                </div>
+                <div class="combat-stat kp">
+                    <label for="luck-tokens">Glücks-Tokens</label>
+                    <input type="text" id="luck-tokens" value="1/1" readonly>
+                </div>
+            </div>
+        </div>
+
+        <div id="tooltip-container"></div>
+
+        <div class="attributes-section">
+            <h2>
+                Attribute 
+                <span id="available-points">8 verfügbar</span> 
+                <span id="available-skill-points">40 Fertigkeitspunkte verfügbar</span>
+                <button id="reset-attributes" class="reset-button">Zurücksetzen</button>
+            </h2>
+            <div class="attributes-grid">
+                <!-- KÖ Spalte -->
+                <div class="attribute-column">
+                    <h3>KÖ <input type="number" class="main-attribute-value" value="1" min="1" max="5"></h3>
+                    <div class="attribute-list">
+                        <div class="attribute-item">Akrobatik 
+                            <div class="attribute-value-container">
+                                <input type="number" class="attribute-value" value="0" min="0" max="5">
+                            </div>
+                        </div>
+                        <div class="attribute-item">Angeln 
+                            <div class="attribute-value-container">
+                                <input type="number" class="attribute-value" value="0" min="0" max="5">
+                            </div>
+                        </div>
+                        <!-- Änderung für alle anderen Fertigkeiten in dieser Kategorie analog -->
+
+                        <div class="attribute-item">Ausweichen <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Handwerk <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Horchen <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Kampfsport <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Klettern <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Musizieren <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Nahkampf <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Reiten <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Schießen <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Schleichen/Verstecken <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Schließtechnik <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Schwimmen <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Sinnesschärfe <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Springen <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Stärke <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Stehlen <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Tanzen <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Werfen <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Widerstand <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                    </div>
+                </div>
+                
+                <!-- WI Spalte -->
+                <div class="attribute-column">
+                    <h3>WI <input type="number" class="main-attribute-value" value="1" min="1" max="5"></h3>
+                    <div class="attribute-list">
+                        <div class="attribute-item">Archäologie <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Computernutzung <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Erste Hilfe <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Fahrzeuge lenken <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Forensik <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Gefahreninstinkt <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Geschichte <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Kryptografie <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Medizin <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Meteorologie <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Mineralogie <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Naturwissenschaften <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Okkultismus <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Orientierung <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Recherche (Bücher) <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Reparieren <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Umgang mit Pokemon <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Wildnisleben/Survival <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Wissen über Pokemon <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                    </div>
+                </div>
+                
+                <!-- CH Spalte -->
+                <div class="attribute-column">
+                    <h3>CH <input type="number" class="main-attribute-value" value="1" min="1" max="5"></h3>
+                    <div class="attribute-list">
+                        <div class="attribute-item">Anführen <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Auftreten <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Beeindrucken <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Beruhigen <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Betören <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Einschüchtern <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Etikette <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Feilschen <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Gaslighten <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Lippenlesen <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Lügen <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Psychologie <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Schauspielern <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Stimmen nachahmen <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Überreden <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Überzeugen <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                    </div>
+                </div>
+                
+                <!-- GL Spalte -->
+                <div class="attribute-column">
+                    <h3>GL <input type="number" class="main-attribute-value" value="1" min="1" max="5"></h3>
+                    <div class="attribute-list">
+                        <div class="attribute-item">Fangen <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Spielen <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                        <div class="attribute-item">Suchen <input type="number" class="attribute-value" value="0" min="0" max="5"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Inventar-Sektion -->
+        <div class="inventory-section">
+            <h2>Inventar</h2>
+            <div id="inventory-container">
+                <!-- Item-Slots werden durch JavaScript eingefügt -->
+            </div>
+        </div>
+    </div>
+
+    <script src="klasseService.js"></script>
+    <script src="vorteilService.js"></script>
+    <script src="nachteilService.js"></script>
+    <script src="itemService.js"></script>
+    <script src="app.js"></script>
+    <script src="pdfExporter.js"></script>
+    <script src="imageUpload.js"></script>
+    <script src="inventory.js"></script>
+    <script src="klasseEffekte.js"></script>
+    <script src="fertigkeitService.js"></script>
+    <script src="searchableDropdown.js"></script>
+    <script src="nachteilEffekte.js"></script>
+    <script src="typMeisterschaft.js"></script>
+    <script src="pruefungsnoten.js"></script>
+</body>
+</html>
