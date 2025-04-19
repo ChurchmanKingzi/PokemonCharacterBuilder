@@ -162,7 +162,7 @@ const itemService = {
                 id: 'pokemon-sichere-kleidung',
                 name: 'Pokemon-Sichere Kleidung',
                 beschreibung: 'Extrem widerstandsfähige Klamotten. Werden damit beworben, jedem Pokemon-Angriff widerstehen zu können. Das ist offensichtlich Unsinn. Aber du nimmst nur halben Schaden von speziellen Attacken, da die Kleidung dich tatsächlich gut abschirmt. Physischer Schaden ist nicht betroffen. Wenn die Kleidung zu viel mitmacht, kann sie auch kaputt gehen!',
-                anzahl: 10
+                anzahl: 1
             },
             {
                 id: 'camping-set',
