@@ -40,7 +40,7 @@ const vorteilService = {
             {
                 id: 'fantastische-eignung',
                 name: 'Fantastische Eignung',
-                beschreibung: 'Du erhältst +1 Punkt für Grundwerte und +8 Punkte für Fertigkeiten zu verteilen.'
+                beschreibung: 'Du erhältst +1 Punkt für Grundwerte und +12 Punkte für Fertigkeiten zu verteilen.'
             },
             {
                 id: 'fruehaufsteher',

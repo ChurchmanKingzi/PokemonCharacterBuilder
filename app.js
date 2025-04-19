@@ -3,7 +3,10 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Konstanten für die Punkteberechnung
     const TOTAL_ATTRIBUTE_POINTS = 12;
-    const TOTAL_SKILL_POINTS = 40;
+    const TOTAL_SKILL_POINTS = 50;
+    let CURRENT_ATTRIBUTE_MAX = TOTAL_ATTRIBUTE_POINTS; // Dynamischer Wert basierend auf Vorteilen
+    let CURRENT_SKILL_MAX = TOTAL_SKILL_POINTS;         // Dynamischer Wert basierend auf Vorteilen
+    
     const MIN_MAIN_ATTRIBUTE = 1;
     const MAX_MAIN_ATTRIBUTE = 5;
     const MIN_SKILL_VALUE = 0;
@@ -61,6 +64,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Reset-Button Event-Listener
     initResetButton();
+
+    
+    addFantastischeEignungEventListener();
     
     // ===== FUNKTIONEN =====
     
@@ -557,7 +563,8 @@ document.addEventListener('DOMContentLoaded', function() {
             usedPoints += parseInt(input.value) || 0;
         });
         
-        return TOTAL_ATTRIBUTE_POINTS - usedPoints;
+        // Verwende den dynamischen maximalen Wert
+        return CURRENT_ATTRIBUTE_MAX - usedPoints;
     }
     
     // Funktion zur Berechnung der verfügbaren Fertigkeitspunkte
@@ -567,8 +574,10 @@ document.addEventListener('DOMContentLoaded', function() {
             usedPoints += parseInt(input.value) || 0;
         });
         
-        return TOTAL_SKILL_POINTS - usedPoints;
+        // Verwende den dynamischen maximalen Wert
+        return CURRENT_SKILL_MAX - usedPoints;
     }
+    
     
     // Funktion zum Aktualisieren der Attributpunkte-Anzeige
     function updateAvailablePointsDisplay() {
@@ -694,6 +703,135 @@ document.addEventListener('DOMContentLoaded', function() {
             paInput.style.color = '';
             paInput.style.fontWeight = '';
         }
+    }
+
+    function checkFantastischeEignungVorteil() {
+        const advantageSelect = document.getElementById('advantage');
+        
+        // Flag, um zu prüfen, ob der Vorteil gerade aktiviert/deaktiviert wird
+        const wasActive = CURRENT_ATTRIBUTE_MAX > TOTAL_ATTRIBUTE_POINTS;
+        const isActive = advantageSelect.value === 'fantastische-eignung';
+        
+        // Wenn keine Änderung, nichts tun
+        if ((wasActive && isActive) || (!wasActive && !isActive)) {
+            return;
+        }
+        
+        if (isActive) {
+            // Erhöhe die maximalen Punkte
+            CURRENT_ATTRIBUTE_MAX = TOTAL_ATTRIBUTE_POINTS + 1;
+            CURRENT_SKILL_MAX = TOTAL_SKILL_POINTS + 12;
+            
+            // Visuelle Hervorhebung der erhöhten Punktelimits
+            elements.availablePointsDisplay.style.color = '#006400'; // Dunkelgrün
+            elements.availablePointsDisplay.style.fontWeight = 'bold';
+            elements.availableSkillPointsDisplay.style.color = '#006400'; // Dunkelgrün
+            elements.availableSkillPointsDisplay.style.fontWeight = 'bold';
+        } else {
+            // Setze die maximalen Punkte zurück
+            CURRENT_ATTRIBUTE_MAX = TOTAL_ATTRIBUTE_POINTS;
+            CURRENT_SKILL_MAX = TOTAL_SKILL_POINTS;
+            
+            // Visuelle Hervorhebung zurücksetzen
+            elements.availablePointsDisplay.style.color = '';
+            elements.availablePointsDisplay.style.fontWeight = '';
+            elements.availableSkillPointsDisplay.style.color = '';
+            elements.availableSkillPointsDisplay.style.fontWeight = '';
+            
+            // Überprüfe, ob zu viele Punkte ausgegeben wurden
+            handleAttributeOverspend();
+            handleSkillOverspend();
+        }
+        
+        // Aktualisiere die Anzeigen
+        updateAvailablePointsDisplay();
+        updateAvailableSkillPointsDisplay();
+    }
+
+    // Funktion zum Behandeln von überzähligen Attributpunkten
+    function handleAttributeOverspend() {
+        let usedPoints = 0;
+        // Berechne die verwendeten Attributpunkte
+        elements.mainAttributeInputs.forEach(input => {
+            usedPoints += parseInt(input.value) || 0;
+        });
+        
+        // Wenn mehr Punkte ausgegeben wurden, als jetzt verfügbar sind
+        if (usedPoints > CURRENT_ATTRIBUTE_MAX) {
+            const overspend = usedPoints - CURRENT_ATTRIBUTE_MAX;
+            
+            // Zeige eine Warnung an den Benutzer
+            alert(`Der Vorteil "Fantastische Eignung" wurde deaktiviert. Es müssen ${overspend} Attributpunkte entfernt werden.`);
+            
+            // Entferne zufällig Punkte, bis die Grenze eingehalten wird
+            let remainingToRemove = overspend;
+            
+            while (remainingToRemove > 0) {
+                // Erstelle Array mit allen Attributen, die noch reduzierbar sind
+                const reducibleAttributes = Array.from(elements.mainAttributeInputs).filter(input => {
+                    return parseInt(input.value) > MIN_MAIN_ATTRIBUTE;
+                });
+                
+                // Wenn keine reduzierbaren Attribute mehr vorhanden sind, breche ab
+                if (reducibleAttributes.length === 0) {
+                    break;
+                }
+                
+                // Wähle ein zufälliges Attribut aus
+                const randomIndex = Math.floor(Math.random() * reducibleAttributes.length);
+                const selectedAttribute = reducibleAttributes[randomIndex];
+                
+                // Reduziere den Wert um 1
+                selectedAttribute.value = (parseInt(selectedAttribute.value) - 1).toString();
+                remainingToRemove--;
+            }
+        }
+    }
+
+    // Funktion zum Behandeln von überzähligen Fertigkeitspunkten
+    function handleSkillOverspend() {
+        let usedPoints = 0;
+        // Berechne die verwendeten Fertigkeitspunkte
+        elements.attributeInputs.forEach(input => {
+            usedPoints += parseInt(input.value) || 0;
+        });
+        
+        // Wenn mehr Punkte ausgegeben wurden, als jetzt verfügbar sind
+        if (usedPoints > CURRENT_SKILL_MAX) {
+            const overspend = usedPoints - CURRENT_SKILL_MAX;
+            
+            // Zeige eine Warnung an den Benutzer
+            alert(`Der Vorteil "Fantastische Eignung" wurde deaktiviert. Es müssen ${overspend} Fertigkeitspunkte entfernt werden.`);
+            
+            // Entferne zufällig Punkte, bis die Grenze eingehalten wird
+            let remainingToRemove = overspend;
+            
+            while (remainingToRemove > 0) {
+                // Erstelle Array mit allen Fertigkeiten, die noch reduzierbar sind
+                const reducibleSkills = Array.from(elements.attributeInputs).filter(input => {
+                    return parseInt(input.value) > MIN_SKILL_VALUE;
+                });
+                
+                // Wenn keine reduzierbaren Fertigkeiten mehr vorhanden sind, breche ab
+                if (reducibleSkills.length === 0) {
+                    break;
+                }
+                
+                // Wähle eine zufällige Fertigkeit aus
+                const randomIndex = Math.floor(Math.random() * reducibleSkills.length);
+                const selectedSkill = reducibleSkills[randomIndex];
+                
+                // Reduziere den Wert um 1
+                selectedSkill.value = (parseInt(selectedSkill.value) - 1).toString();
+                remainingToRemove--;
+            }
+        }
+    }
+
+    
+    function addFantastischeEignungEventListener() {
+        const advantageSelect = document.getElementById('advantage');
+        advantageSelect.addEventListener('change', checkFantastischeEignungVorteil);
     }
 
     // Funktion zum Überprüfen und Anwenden des Glückspilz-Vorteils
@@ -1111,6 +1249,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initiale Prüfung
     setTimeout(function() {
         checkDoppelteKlasse();
+    }, 500);
+    // Initiale Prüfung
+    setTimeout(function() {
+        checkFantastischeEignungVorteil();
     }, 500);
     
     // Funktion zum Überprüfen und Anwenden des Doppelte-Klasse-Vorteils
@@ -1834,4 +1976,5 @@ document.getElementById('advantage').addEventListener('change', function() {
     checkGlueckspilzVorteil();
     checkVernarbtVorteil();
     checkReichVorteil();
+    checkFantastischeEignungVorteil();
 });
