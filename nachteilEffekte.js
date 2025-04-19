@@ -166,25 +166,35 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Funktion, um die gegenseitige Ausschließung von 'Reich' und 'Arm' zu handhaben
     function setupMutualExclusion() {
-        console.log("Setting up mutual exclusion for Reich and Arm");
+        console.log("Setting up mutual exclusion for Reich/Arm and Nachtsicht/Nachtblindheit");
         
         // Funktion, um Optionen zu deaktivieren/aktivieren
         function updateExclusionState() {
             console.log("Updating exclusion state");
             
-            // Überprüfe den aktuellen Status beider Selects
+            // Überprüfe den aktuellen Status beider Selects für Reich/Arm
             const isReichSelected = advantageSelect.value === 'reich';
             const isArmSelected = disadvantageSelect.value === 'arm';
             
+            // Überprüfe den aktuellen Status beider Selects für Nachtsicht/Nachtblindheit
+            const isNachtsichtSelected = advantageSelect.value === 'nachtsicht';
+            const isNachtblindheitSelected = disadvantageSelect.value === 'nachtblindheit';
+            
             console.log("Reich selected:", isReichSelected);
             console.log("Arm selected:", isArmSelected);
+            console.log("Nachtsicht selected:", isNachtsichtSelected);
+            console.log("Nachtblindheit selected:", isNachtblindheitSelected);
             
             // Finde die entsprechenden Custom-Select-Optionen
             const reichOptions = document.querySelectorAll('.custom-select-option[data-value="reich"]');
             const armOptions = document.querySelectorAll('.custom-select-option[data-value="arm"]');
+            const nachtsichtOptions = document.querySelectorAll('.custom-select-option[data-value="nachtsicht"]');
+            const nachtblindheitOptions = document.querySelectorAll('.custom-select-option[data-value="nachtblindheit"]');
             
             console.log("Found Reich options:", reichOptions.length);
             console.log("Found Arm options:", armOptions.length);
+            console.log("Found Nachtsicht options:", nachtsichtOptions.length);
+            console.log("Found Nachtblindheit options:", nachtblindheitOptions.length);
             
             // Deaktiviere/Aktiviere die Reich-Option basierend auf Arm-Auswahl
             reichOptions.forEach(option => {
@@ -221,6 +231,44 @@ document.addEventListener('DOMContentLoaded', function() {
                     option.style.cursor = 'pointer';
                     option.dataset.disabled = 'false';
                     console.log("Enabled Arm option");
+                }
+            });
+            
+            // Deaktiviere/Aktiviere die Nachtsicht-Option basierend auf Nachtblindheit-Auswahl
+            nachtsichtOptions.forEach(option => {
+                if (isNachtblindheitSelected) {
+                    // Nachtblindheit ist ausgewählt, also deaktiviere Nachtsicht
+                    option.style.color = '#999';
+                    option.style.backgroundColor = '#f5f5f5';
+                    option.style.cursor = 'not-allowed';
+                    option.dataset.disabled = 'true';
+                    console.log("Disabled Nachtsicht option");
+                } else {
+                    // Nachtblindheit ist nicht ausgewählt, also aktiviere Nachtsicht
+                    option.style.color = '';
+                    option.style.backgroundColor = '';
+                    option.style.cursor = 'pointer';
+                    option.dataset.disabled = 'false';
+                    console.log("Enabled Nachtsicht option");
+                }
+            });
+            
+            // Deaktiviere/Aktiviere die Nachtblindheit-Option basierend auf Nachtsicht-Auswahl
+            nachtblindheitOptions.forEach(option => {
+                if (isNachtsichtSelected) {
+                    // Nachtsicht ist ausgewählt, also deaktiviere Nachtblindheit
+                    option.style.color = '#999';
+                    option.style.backgroundColor = '#f5f5f5';
+                    option.style.cursor = 'not-allowed';
+                    option.dataset.disabled = 'true';
+                    console.log("Disabled Nachtblindheit option");
+                } else {
+                    // Nachtsicht ist nicht ausgewählt, also aktiviere Nachtblindheit
+                    option.style.color = '';
+                    option.style.backgroundColor = '';
+                    option.style.cursor = 'pointer';
+                    option.dataset.disabled = 'false';
+                    console.log("Enabled Nachtblindheit option");
                 }
             });
         }

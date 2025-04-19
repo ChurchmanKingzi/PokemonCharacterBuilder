@@ -140,7 +140,7 @@ const vorteilService = {
             {
                 id: 'typ-experte',
                 name: 'Typ-Experte',
-                beschreibung: 'Wähle einen Typ. Du erhältst +1 Erfolge für alle Proben auf Umgang mit Pokemon und Fangen für Pokemon dieses Typs, aber +1 Patzer für alle Proben auf Umgang mit Pokemon und Fangen für Pokemon, die nicht diesen Typ haben. Wenn du ein Pokemon des Typs fängst, erhält es wegen deines guten Umgangs automatisch +1 GENA und +1 PA.'
+                beschreibung: 'Wähle einen Typ. Du erhältst +1 Erfolge für alle Proben auf Umgang mit Pokemon und Fangen für Pokemon dieses Typs, aber +1 Patzer für alle Proben auf Umgang mit Pokemon und Fangen für Pokemon, die nicht diesen Typ haben. Wenn du ein Pokemon des Typs fängst, erhält es wegen deines guten Umgangs automatisch +1 GENA und +1 PA. Deine Typ-Meisterschaft mit diesem Typ steigt doppelt so schnell.'
             },
             {
                 id: 'vernarbt',
