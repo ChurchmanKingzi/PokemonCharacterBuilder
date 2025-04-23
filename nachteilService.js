@@ -123,6 +123,11 @@ const nachteilService = {
                 beschreibung: 'Du bist von Natur aus einfach ungeschickt. Proben auf folgendes sind für dich um X Stufen erschwert: Akrobatik (3), Angeln (1), Handwerk (2), Klettern (2), Reiten (1), Schleichen/Verstecken (3), Schließtechnik (2), Springen (2), Stehlen (3), Tanzen (3), Werfen (2), Computernutzung (1), Erste Hilfe (2), Fahrzeuge lenken (1), Reparieren (1), Wildnisleben/Survival (1), Beeindrucken (2), Musizieren (1), PA-Proben (1).'
             },
             {
+                id: 'unselbststaendig',
+                name: 'Unselbstständig',
+                beschreibung: 'Du kommst alleine einfach nicht klar. Solange du nicht jemanden bei dir hast, der dir sagt, was du tun sollst, oder dir zumindest aktiv moralischen Support gibt, kannst du aktiv keine Proben versuchen.'
+            },
+            {
                 id: 'unterdrückte persönlichkeit',
                 name: 'Unterdrückte Persönlichkeit',
                 beschreibung: 'Tief in deinem Unterbewusstsein lebt ein zweites Du, das in jeder Hinsicht dein Gegenteil ist. Bist du vorsichtig, ist es risikofreudig. Bist du freundlich, ist es ein Arschloch. Und so weiter. Immer, wenn deine KP unter die Hälfte ihres Maximums fallen, kommt deine andere Persönlichkeit zum Vorschein und bleibt solange aktiv, bis du über 50% deiner max KP geheilt bist und dich nicht in einer Stresssituation (etwa im Kampf) befindest. Beide Persönlichkeiten haben VERSCHIEDENE GEDÄCHTNISSE und wissen beide nicht, wie man den Persönlichkeitswechsel triggern kann.'
